@@ -1,30 +1,27 @@
 package com.back.boundedcontext.member.app;
 
-import com.back.shared.member.dto.MemberCreateRequest;
 import com.back.boundedcontext.member.domain.Member;
 import com.back.boundedcontext.member.out.MemberRepository;
-import com.back.global.exception.DomainException;
+import com.back.shared.member.dto.MemberCreateRequest;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class MemberService {
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class MemberFacade {
     private final MemberRepository memberRepository;
-
-    public MemberService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
+    private final MemberUseCase memberUseCase;
 
     public long count() {
         return memberRepository.count();
     }
 
+    @Transactional
     public Member join(MemberCreateRequest request) {
-        findByUsername(request.getUsername()).ifPresent(m -> {
-            throw new DomainException("409-1", "이미 존재하는 username 입니다.");
-        });
-        Member member = Member.create(request.getUsername(), request.getPassword(), request.getPassword());
-        return memberRepository.save(member);
+        return memberUseCase.join(request.getUserName(), request.getPassword(), request.getPassword());
     }
 
     public Optional<Member> findByUsername(String username) {

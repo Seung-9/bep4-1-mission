@@ -1,29 +1,27 @@
 package com.back.boundedcontext.post.app;
 
-import com.back.shared.post.event.PostCreatedEvent;
-import com.back.shared.post.dto.PostCreateRequest;
 import com.back.boundedcontext.post.domain.Post;
 import com.back.boundedcontext.post.out.PostRepository;
-import com.back.global.event.EventPublisher;
+import com.back.shared.post.dto.PostCreateRequest;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class PostService {
+@Transactional(readOnly = true)
+public class PostFacade {
     private final PostRepository postRepository;
-    private final EventPublisher eventPublisher;
+    private final PostUseCase postUseCase;
 
     public long count() {
         return postRepository.count();
     }
 
+    @Transactional
     public Post write(PostCreateRequest request) {
-        Post post = Post.create(request.getAuthor(), request.getTitle(), request.getContent());
-        Post savePost = postRepository.save(post);
-        eventPublisher.publishEvent(new PostCreatedEvent(savePost.getId(), savePost.getAuthor().getId()));
-        return post;
+        return postUseCase.write(request.getAuthor(), request.getTitle(), request.getContent());
     }
 
     public Optional<Post> findById(int id) {

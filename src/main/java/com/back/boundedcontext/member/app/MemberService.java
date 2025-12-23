@@ -1,8 +1,8 @@
-package com.back.boundedcontext.member.service;
+package com.back.boundedcontext.member.app;
 
-import com.back.boundedcontext.member.dto.request.MemberCreateRequest;
-import com.back.boundedcontext.member.entity.Member;
-import com.back.boundedcontext.member.repository.MemberRepository;
+import com.back.shared.member.dto.MemberCreateRequest;
+import com.back.boundedcontext.member.domain.Member;
+import com.back.boundedcontext.member.out.MemberRepository;
 import com.back.global.exception.DomainException;
 import java.util.Optional;
 import org.springframework.stereotype.Service;

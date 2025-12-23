@@ -1,9 +1,9 @@
-package com.back.boundedcontext.post.service;
+package com.back.boundedcontext.post.app;
 
-import com.back.boundedcontext.post.dto.request.PostCreatedEvent;
-import com.back.boundedcontext.post.dto.request.PostCreateRequest;
-import com.back.boundedcontext.post.entity.Post;
-import com.back.boundedcontext.post.repository.PostRepository;
+import com.back.shared.post.event.PostCreatedEvent;
+import com.back.shared.post.dto.PostCreateRequest;
+import com.back.boundedcontext.post.domain.Post;
+import com.back.boundedcontext.post.out.PostRepository;
 import com.back.global.event.EventPublisher;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

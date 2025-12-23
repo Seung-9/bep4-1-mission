@@ -1,6 +1,6 @@
-package com.back.boundedcontext.post.dto.request;
+package com.back.shared.post.dto;
 
-import com.back.boundedcontext.member.entity.Member;
+import com.back.boundedcontext.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,11 +1,11 @@
-package com.back.boundedcontext.post.entity;
+package com.back.boundedcontext.post.domain;
 
 import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.FetchType.LAZY;
 
-import com.back.boundedcontext.member.entity.Member;
-import com.back.boundedcontext.post.dto.request.PostCommentCreatedEvent;
+import com.back.boundedcontext.member.domain.Member;
+import com.back.shared.post.event.PostCommentCreatedEvent;
 import com.back.global.jpa.entity.BaseAndTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

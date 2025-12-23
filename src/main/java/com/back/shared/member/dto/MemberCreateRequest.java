@@ -1,4 +1,4 @@
-package com.back.boundedcontext.member.dto.request;
+package com.back.shared.member.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

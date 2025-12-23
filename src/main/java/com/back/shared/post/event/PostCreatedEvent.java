@@ -1,4 +1,4 @@
-package com.back.boundedcontext.post.dto.request;
+package com.back.shared.post.event;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

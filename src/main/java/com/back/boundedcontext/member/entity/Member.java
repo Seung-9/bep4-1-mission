@@ -3,10 +3,16 @@ package com.back.boundedcontext.member.entity;
 import com.back.global.jpa.entity.BaseAndTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
+@Builder
 public class Member extends BaseAndTime {
 
     @Column(unique = true)
@@ -15,13 +21,15 @@ public class Member extends BaseAndTime {
     private String nickname;
     private int activityScore;
 
-    public Member(String username, String password, String nickname) {
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-    }
-
     public int increaseActivityScore(int amount) {
         return this.activityScore += amount;
+    }
+
+    public static Member create(String username, String password, String nickname) {
+        return Member.builder()
+                .username(username)
+                .password(password)
+                .nickname(nickname)
+                .build();
     }
 }

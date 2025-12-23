@@ -5,6 +5,7 @@ import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.FetchType.LAZY;
 
 import com.back.boundedcontext.member.entity.Member;
+import com.back.boundedcontext.post.dto.request.PostCommentCreatedEvent;
 import com.back.global.jpa.entity.BaseAndTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,10 +13,16 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
+@Builder(access = AccessLevel.PRIVATE)
 public class Post extends BaseAndTime {
 
     @ManyToOne(fetch = LAZY)
@@ -29,22 +36,22 @@ public class Post extends BaseAndTime {
     @Column(columnDefinition = "LONGTEXT")
     private String content;
 
-    public Post(Member author, String title, String content) {
-        this.author = author;
-        this.title = title;
-        this.content = content;
-    }
-
     public PostComment addComment(Member author, String content) {
-        PostComment postComment = new PostComment(this, author, content);
-
+        PostComment postComment = PostComment.create(this, author, content);
         comments.add(postComment);
-        author.increaseActivityScore(1); // 댓글 작성시 활동점수 1점 증가
-
+        publishEvent(new PostCommentCreatedEvent(postComment.getId(), postComment.getAuthor().getId()));
         return postComment;
     }
 
     public boolean hasComments() {
         return !comments.isEmpty();
+    }
+
+    public static Post create(Member author, String title, String content) {
+        return Post.builder()
+                .author(author)
+                .title(title)
+                .content(content)
+                .build();
     }
 }

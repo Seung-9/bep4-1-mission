@@ -1,6 +1,8 @@
 package com.back.global.initdata;
 
+import com.back.boundedcontext.member.dto.request.MemberCreateRequest;
 import com.back.boundedcontext.member.entity.Member;
+import com.back.boundedcontext.post.dto.request.PostCreateRequest;
 import com.back.boundedcontext.post.entity.Post;
 import com.back.boundedcontext.member.service.MemberService;
 import com.back.boundedcontext.post.service.PostService;
@@ -37,12 +39,12 @@ public class InitData {
     public void makeBaseMembers() {
         if (memberService.count() > 0) return;
 
-        Member systemMember = memberService.join("system", "1234", "시스템");
-        Member holdingMember = memberService.join("holding", "1234", "홀딩");
-        Member adminMember = memberService.join("admin", "1234", "관리자");
-        Member user1Member = memberService.join("user1", "1234", "유저1");
-        Member user2Member = memberService.join("user2", "1234", "유저2");
-        Member user3Member = memberService.join("user3", "1234", "유저3");
+        Member systemMember = memberService.join(new MemberCreateRequest("system", "1234", "시스템"));
+        Member holdingMember = memberService.join(new MemberCreateRequest("holding", "1234", "홀딩"));
+        Member adminMember = memberService.join(new MemberCreateRequest("admin", "1234", "관리자"));
+        Member user1Member = memberService.join(new MemberCreateRequest("user1", "1234", "유저1"));
+        Member user2Member = memberService.join(new MemberCreateRequest("user2", "1234", "유저2"));
+        Member user3Member = memberService.join(new MemberCreateRequest("user3", "1234", "유저3"));
     }
 
     @Transactional
@@ -53,12 +55,12 @@ public class InitData {
         Member user2Member = memberService.findByUsername("user2").get();
         Member user3Member = memberService.findByUsername("user3").get();
 
-        Post post1 = postService.write(user1Member, "제목1", "내용1");
-        Post post2 = postService.write(user1Member, "제목2", "내용2");
-        Post post3 = postService.write(user1Member, "제목3", "내용3");
-        Post post4 = postService.write(user2Member, "제목4", "내용4");
-        Post post5 = postService.write(user2Member, "제목5", "내용5");
-        Post post6 = postService.write(user3Member, "제목6", "내용6");
+        Post post1 = postService.write(new PostCreateRequest(user1Member, "제목1", "내용1"));
+        Post post2 = postService.write(new PostCreateRequest(user1Member, "제목2", "내용2"));
+        Post post3 = postService.write(new PostCreateRequest(user1Member, "제목3", "내용3"));
+        Post post4 = postService.write(new PostCreateRequest(user2Member, "제목4", "내용4"));
+        Post post5 = postService.write(new PostCreateRequest(user2Member, "제목5", "내용5"));
+        Post post6 = postService.write(new PostCreateRequest(user3Member, "제목6", "내용6"));
     }
 
     @Transactional

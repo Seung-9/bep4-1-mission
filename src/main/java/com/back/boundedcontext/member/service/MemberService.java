@@ -1,5 +1,6 @@
 package com.back.boundedcontext.member.service;
 
+import com.back.boundedcontext.member.dto.request.MemberCreateRequest;
 import com.back.boundedcontext.member.entity.Member;
 import com.back.boundedcontext.member.repository.MemberRepository;
 import com.back.global.exception.DomainException;
@@ -18,15 +19,19 @@ public class MemberService {
         return memberRepository.count();
     }
 
-    public Member join(String username, String password, String nickname) {
-        findByUsername(username).ifPresent(m -> {
+    public Member join(MemberCreateRequest request) {
+        findByUsername(request.getUsername()).ifPresent(m -> {
             throw new DomainException("409-1", "이미 존재하는 username 입니다.");
         });
-
-        return memberRepository.save(new Member(username, password, nickname));
+        Member member = Member.create(request.getUsername(), request.getPassword(), request.getPassword());
+        return memberRepository.save(member);
     }
 
     public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
+    }
+
+    public Optional<Member> findById(int id) {
+        return memberRepository.findById(id);
     }
 }

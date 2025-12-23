@@ -7,10 +7,16 @@ import com.back.global.jpa.entity.BaseAndTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
+@Builder
 public class PostComment extends BaseAndTime {
     @ManyToOne(fetch = LAZY)
     private Post post;
@@ -21,9 +27,11 @@ public class PostComment extends BaseAndTime {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    public PostComment(Post post, Member author, String content) {
-        this.post = post;
-        this.author = author;
-        this.content = content;
+    public static PostComment create(Post post, Member author, String content) {
+        return PostComment.builder()
+                .post(post)
+                .author(author)
+                .content(content)
+                .build();
     }
 }

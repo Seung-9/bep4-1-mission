@@ -38,6 +38,7 @@ public class Post extends BaseAndTime {
         PostComment postComment = new PostComment(this, author, content);
 
         comments.add(postComment);
+        author.increaseActivityScore(1); // 댓글 작성시 활동점수 1점 증가
 
         return postComment;
     }

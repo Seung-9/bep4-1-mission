@@ -1,8 +1,9 @@
-package com.back.entity;
+package com.back.boundedcontext.post.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
 
-import com.back.jpa.entity.BaseAndTime;
+import com.back.boundedcontext.member.entity.Member;
+import com.back.global.jpa.entity.BaseAndTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;

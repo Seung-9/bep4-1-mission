@@ -39,12 +39,12 @@ public class InitData {
     public void makeBaseMembers() {
         if (memberFacade.count() > 0) return;
 
-        Member systemMember = memberFacade.join(new MemberCreateRequest("system", "1234", "시스템"));
-        Member holdingMember = memberFacade.join(new MemberCreateRequest("holding", "1234", "홀딩"));
-        Member adminMember = memberFacade.join(new MemberCreateRequest("admin", "1234", "관리자"));
-        Member user1Member = memberFacade.join(new MemberCreateRequest("user1", "1234", "유저1"));
-        Member user2Member = memberFacade.join(new MemberCreateRequest("user2", "1234", "유저2"));
-        Member user3Member = memberFacade.join(new MemberCreateRequest("user3", "1234", "유저3"));
+        Member systemMember = memberFacade.join(new MemberCreateRequest("system", "1234", "시스템")).getData();
+        Member holdingMember = memberFacade.join(new MemberCreateRequest("holding", "1234", "홀딩")).getData();
+        Member adminMember = memberFacade.join(new MemberCreateRequest("admin", "1234", "관리자")).getData();
+        Member user1Member = memberFacade.join(new MemberCreateRequest("user1", "1234", "유저1")).getData();
+        Member user2Member = memberFacade.join(new MemberCreateRequest("user2", "1234", "유저2")).getData();
+        Member user3Member = memberFacade.join(new MemberCreateRequest("user3", "1234", "유저3")).getData();
     }
 
     @Transactional

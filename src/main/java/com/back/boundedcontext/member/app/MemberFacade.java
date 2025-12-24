@@ -2,6 +2,7 @@ package com.back.boundedcontext.member.app;
 
 import com.back.boundedcontext.member.domain.Member;
 import com.back.boundedcontext.member.out.MemberRepository;
+import com.back.global.rsdata.RsData;
 import com.back.shared.member.dto.MemberCreateRequest;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class MemberFacade {
     }
 
     @Transactional
-    public Member join(MemberCreateRequest request) {
+    public RsData<Member> join(MemberCreateRequest request) {
         return memberUseCase.join(request.getUserName(), request.getPassword(), request.getPassword());
     }
 

@@ -1,6 +1,7 @@
 package com.back.boundedcontext.member.app;
 
 import com.back.boundedcontext.member.domain.Member;
+import com.back.boundedcontext.member.domain.MemberPolicy;
 import com.back.boundedcontext.member.out.MemberRepository;
 import com.back.global.rsdata.RsData;
 import com.back.shared.member.dto.MemberCreateRequest;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberFacade {
     private final MemberRepository memberRepository;
     private final MemberUseCase memberUseCase;
+    private final MemberPolicy memberPolicy;
 
     public long count() {
         return memberRepository.count();
@@ -31,5 +33,9 @@ public class MemberFacade {
 
     public Optional<Member> findById(int id) {
         return memberRepository.findById(id);
+    }
+
+    public String getRandomSecureTip() {
+        return "비밀번호의 유효기간은 %d일 입니다.".formatted(memberPolicy.getNeedToChangePasswordDays());
     }
 }

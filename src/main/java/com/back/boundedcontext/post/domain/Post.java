@@ -5,12 +5,13 @@ import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.FetchType.LAZY;
 
 import com.back.boundedcontext.member.domain.Member;
-import com.back.shared.post.event.PostCommentCreatedEvent;
 import com.back.global.jpa.entity.BaseAndTime;
+import com.back.shared.post.event.PostCommentCreatedEvent;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
@@ -20,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "POST_POST")
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
@@ -28,6 +30,7 @@ public class Post extends BaseAndTime {
     @ManyToOne(fetch = LAZY)
     private Member author;
 
+    @Builder.Default
     @OneToMany(mappedBy = "post", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<PostComment> comments = new ArrayList<>();
 

@@ -457,3 +457,6 @@ org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (
 	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
 	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
 	at java.base/java.lang.Thread.run(Thread.java:1474)
+2025-12-24 15:03:53.524140+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MEMBER_MEMBER" not found (this database is empty); SQL statement:
+/* select count(*) from Member x */ select count(*) from member_member m1_0 [42104-240]

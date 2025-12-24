@@ -39,7 +39,6 @@ public class InitData {
     @Transactional
     public void makeBaseMembers() {
         if (memberFacade.count() > 0) return;
-
         Member systemMember = memberFacade.join(new MemberCreateRequest("system", "1234", "시스템")).getData();
         Member holdingMember = memberFacade.join(new MemberCreateRequest("holding", "1234", "홀딩")).getData();
         Member adminMember = memberFacade.join(new MemberCreateRequest("admin", "1234", "관리자")).getData();
@@ -56,17 +55,17 @@ public class InitData {
         Member user2Member = memberFacade.findByUsername("user2").get();
         Member user3Member = memberFacade.findByUsername("user3").get();
 
-        RsData<Post> post1RsData = postFacade.write(new PostCreateRequest(user1Member, "제목1", "내용1")).getData();
+        RsData<Post> post1RsData = postFacade.write(new PostCreateRequest(user1Member, "제목1", "내용1"));
         log.debug(post1RsData.getMsg());
-        RsData<Post> post2RsData = postFacade.write(new PostCreateRequest(user1Member, "제목2", "내용2")).getData();
+        RsData<Post> post2RsData = postFacade.write(new PostCreateRequest(user1Member, "제목2", "내용2"));
         log.debug(post2RsData.getMsg());
-        RsData<Post> post3RsData = postFacade.write(new PostCreateRequest(user1Member, "제목3", "내용3")).getData();
+        RsData<Post> post3RsData = postFacade.write(new PostCreateRequest(user1Member, "제목3", "내용3"));
         log.debug(post3RsData.getMsg());
-        RsData<Post> post4RsData = postFacade.write(new PostCreateRequest(user2Member, "제목4", "내용4")).getData();
+        RsData<Post> post4RsData = postFacade.write(new PostCreateRequest(user2Member, "제목4", "내용4"));
         log.debug(post4RsData.getMsg());
-        RsData<Post> post5RsData = postFacade.write(new PostCreateRequest(user2Member, "제목5", "내용5")).getData();
+        RsData<Post> post5RsData = postFacade.write(new PostCreateRequest(user2Member, "제목5", "내용5"));
         log.debug(post5RsData.getMsg());
-        RsData<Post> post6RsData= postFacade.write(new PostCreateRequest(user3Member, "제목6", "내용6")).getData();
+        RsData<Post> post6RsData= postFacade.write(new PostCreateRequest(user3Member, "제목6", "내용6"));
         log.debug(post6RsData.getMsg());
     }
 

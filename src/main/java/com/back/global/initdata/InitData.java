@@ -81,7 +81,6 @@ public class InitData {
         post1.addComment(user1Member, "댓글1");
         post1.addComment(user2Member, "댓글2");
         post1.addComment(user3Member, "댓글3");
-
         post2.addComment(user2Member, "댓글4");
         post2.addComment(user2Member, "댓글5");
 

@@ -2,6 +2,7 @@ package com.back.global.initdata;
 
 import com.back.boundedcontext.member.app.MemberFacade;
 import com.back.boundedcontext.post.app.PostFacade;
+import com.back.global.rsdata.RsData;
 import com.back.shared.member.dto.MemberCreateRequest;
 import com.back.boundedcontext.member.domain.Member;
 import com.back.shared.post.dto.PostCreateRequest;
@@ -55,12 +56,18 @@ public class InitData {
         Member user2Member = memberFacade.findByUsername("user2").get();
         Member user3Member = memberFacade.findByUsername("user3").get();
 
-        Post post1 = postFacade.write(new PostCreateRequest(user1Member, "제목1", "내용1")).getData();
-        Post post2 = postFacade.write(new PostCreateRequest(user1Member, "제목2", "내용2")).getData();
-        Post post3 = postFacade.write(new PostCreateRequest(user1Member, "제목3", "내용3")).getData();
-        Post post4 = postFacade.write(new PostCreateRequest(user2Member, "제목4", "내용4")).getData();
-        Post post5 = postFacade.write(new PostCreateRequest(user2Member, "제목5", "내용5")).getData();
-        Post post6 = postFacade.write(new PostCreateRequest(user3Member, "제목6", "내용6")).getData();
+        RsData<Post> post1RsData = postFacade.write(new PostCreateRequest(user1Member, "제목1", "내용1")).getData();
+        log.debug(post1RsData.getMsg());
+        RsData<Post> post2RsData = postFacade.write(new PostCreateRequest(user1Member, "제목2", "내용2")).getData();
+        log.debug(post2RsData.getMsg());
+        RsData<Post> post3RsData = postFacade.write(new PostCreateRequest(user1Member, "제목3", "내용3")).getData();
+        log.debug(post3RsData.getMsg());
+        RsData<Post> post4RsData = postFacade.write(new PostCreateRequest(user2Member, "제목4", "내용4")).getData();
+        log.debug(post4RsData.getMsg());
+        RsData<Post> post5RsData = postFacade.write(new PostCreateRequest(user2Member, "제목5", "내용5")).getData();
+        log.debug(post5RsData.getMsg());
+        RsData<Post> post6RsData= postFacade.write(new PostCreateRequest(user3Member, "제목6", "내용6")).getData();
+        log.debug(post6RsData.getMsg());
     }
 
     @Transactional

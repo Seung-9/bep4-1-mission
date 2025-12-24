@@ -3,6 +3,7 @@ package com.back.global.jpa.entity;
 import com.back.global.config.GlobalConfig;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -10,7 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 // 모든 엔티티들의 조상
-public class BaseEntity {
+public abstract class BaseEntity {
     public String getModelTypeCode() {
         return this.getClass().getSimpleName();
     }
@@ -18,4 +19,8 @@ public class BaseEntity {
     protected void publishEvent(Object event) {
         GlobalConfig.getEventPublisher().publishEvent(event);
     }
+
+    public abstract int getId();
+    public abstract LocalDateTime getCreateDate();
+    public abstract LocalDateTime getModifyDate();
 }

@@ -1,10 +1,9 @@
 package com.back.global.rsdata;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
 public class RsData<T> {
     private final String resultCode;

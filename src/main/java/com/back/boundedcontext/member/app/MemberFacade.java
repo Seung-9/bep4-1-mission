@@ -24,7 +24,7 @@ public class MemberFacade {
 
     @Transactional
     public RsData<Member> join(MemberCreateRequest request) {
-        return memberUseCase.join(request.getUserName(), request.getPassword(), request.getPassword());
+        return memberUseCase.join(request.getUserName(), request.getPassword(), request.getNickName());
     }
 
     public Optional<Member> findByUsername(String username) {

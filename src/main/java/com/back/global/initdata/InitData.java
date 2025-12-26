@@ -1,12 +1,13 @@
 package com.back.global.initdata;
 
 import com.back.boundedcontext.member.app.MemberFacade;
+import com.back.boundedcontext.member.domain.Member;
 import com.back.boundedcontext.post.app.PostFacade;
+import com.back.boundedcontext.post.domain.Post;
+import com.back.boundedcontext.post.domain.PostMember;
 import com.back.global.rsdata.RsData;
 import com.back.shared.member.dto.MemberCreateRequest;
-import com.back.boundedcontext.member.domain.Member;
 import com.back.shared.post.dto.PostCreateRequest;
-import com.back.boundedcontext.post.domain.Post;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -51,9 +52,9 @@ public class InitData {
     public void makeBasePosts() {
         if (postFacade.count() > 0) return;
 
-        Member user1Member = memberFacade.findByUsername("user1").get();
-        Member user2Member = memberFacade.findByUsername("user2").get();
-        Member user3Member = memberFacade.findByUsername("user3").get();
+        PostMember user1Member = postFacade.findPostMemberByUsername("user1").get();
+        PostMember user2Member = postFacade.findPostMemberByUsername("user2").get();
+        PostMember user3Member = postFacade.findPostMemberByUsername("user3").get();
 
         RsData<Post> post1RsData = postFacade.write(new PostCreateRequest(user1Member, "제목1", "내용1"));
         log.debug(post1RsData.getMsg());
@@ -76,9 +77,9 @@ public class InitData {
         Post post3 = postFacade.findById(3).get();
         Post post4 = postFacade.findById(4).get();
 
-        Member user1Member = memberFacade.findByUsername("user1").get();
-        Member user2Member = memberFacade.findByUsername("user2").get();
-        Member user3Member = memberFacade.findByUsername("user3").get();
+        PostMember user1Member = postFacade.findPostMemberByUsername("user1").get();
+        PostMember user2Member = postFacade.findPostMemberByUsername("user2").get();
+        PostMember user3Member = postFacade.findPostMemberByUsername("user3").get();
 
         if (post1.hasComments()) return;
 

@@ -49,4 +49,10 @@ public class PostFacade {
 
         return postMemberRepository.save(postMember);
     }
+
+
+    @Transactional(readOnly = true)
+    public Optional<PostMember> findPostMemberByUsername(String username) {
+        return postMemberRepository.findByUsername(username);
+    }
 }

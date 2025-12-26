@@ -4,7 +4,6 @@ import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.FetchType.LAZY;
 
-import com.back.boundedcontext.member.domain.Member;
 import com.back.global.jpa.entity.BaseAndTime;
 import com.back.shared.post.event.PostCommentCreatedEvent;
 import jakarta.persistence.Column;
@@ -24,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class Post extends BaseAndTime {
 
     @ManyToOne(fetch = LAZY)
-    private Member author;
+    private PostMember author;
 
     @OneToMany(mappedBy = "post", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<PostComment> comments = new ArrayList<>();
@@ -34,13 +33,13 @@ public class Post extends BaseAndTime {
     @Column(columnDefinition = "LONGTEXT")
     private String content;
 
-    public Post(Member author, String title, String content) {
+    public Post(PostMember author, String title, String content) {
         this.author = author;
         this.title = title;
         this.content = content;
     }
 
-    public PostComment addComment(Member author, String content) {
+    public PostComment addComment(PostMember author, String content) {
         PostComment postComment = new PostComment(this, author, content);
         comments.add(postComment);
         publishEvent(new PostCommentCreatedEvent(postComment.getId(), postComment.getAuthor().getId()));

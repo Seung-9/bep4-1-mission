@@ -2,7 +2,6 @@ package com.back.boundedcontext.post.domain;
 
 import static jakarta.persistence.FetchType.LAZY;
 
-import com.back.boundedcontext.member.domain.Member;
 import com.back.global.jpa.entity.BaseAndTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,12 +19,12 @@ public class PostComment extends BaseAndTime {
     private Post post;
 
     @ManyToOne(fetch = LAZY)
-    private Member author;
+    private PostMember author;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    public PostComment(Post post, Member author, String content) {
+    public PostComment(Post post, PostMember author, String content) {
         this.post = post;
         this.author = author;
         this.content = content;

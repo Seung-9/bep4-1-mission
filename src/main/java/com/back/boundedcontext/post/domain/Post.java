@@ -14,23 +14,18 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "POST_POST")
-@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @Getter
-@Builder(access = AccessLevel.PRIVATE)
 public class Post extends BaseAndTime {
 
     @ManyToOne(fetch = LAZY)
     private Member author;
 
-    @Builder.Default
     @OneToMany(mappedBy = "post", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<PostComment> comments = new ArrayList<>();
 
@@ -39,8 +34,14 @@ public class Post extends BaseAndTime {
     @Column(columnDefinition = "LONGTEXT")
     private String content;
 
+    public Post(Member author, String title, String content) {
+        this.author = author;
+        this.title = title;
+        this.content = content;
+    }
+
     public PostComment addComment(Member author, String content) {
-        PostComment postComment = PostComment.create(this, author, content);
+        PostComment postComment = new PostComment(this, author, content);
         comments.add(postComment);
         publishEvent(new PostCommentCreatedEvent(postComment.getId(), postComment.getAuthor().getId()));
         return postComment;
@@ -48,13 +49,5 @@ public class Post extends BaseAndTime {
 
     public boolean hasComments() {
         return !comments.isEmpty();
-    }
-
-    public static Post create(Member author, String title, String content) {
-        return Post.builder()
-                .author(author)
-                .title(title)
-                .content(content)
-                .build();
     }
 }

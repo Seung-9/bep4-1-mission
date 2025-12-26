@@ -75,8 +75,6 @@ public class InitData {
         Post post2 = postFacade.findById(2).get();
         Post post3 = postFacade.findById(3).get();
         Post post4 = postFacade.findById(4).get();
-        Post post5 = postFacade.findById(5).get();
-        Post post6 = postFacade.findById(6).get();
 
         Member user1Member = memberFacade.findByUsername("user1").get();
         Member user2Member = memberFacade.findByUsername("user2").get();

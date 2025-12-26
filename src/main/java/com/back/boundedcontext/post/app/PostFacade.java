@@ -35,7 +35,7 @@ public class PostFacade {
         return postRepository.findById(id);
     }
 
-
+    @Transactional
     public PostMember syncMember(MemberDto member) {
         PostMember postMember = new PostMember(
                 member.getUsername(),

@@ -18,7 +18,7 @@ public class PostUseCase {
     private final MemberApiClient memberApiClient;
 
     public RsData<Post> write(Member author, String title, String content) {
-        Post post = Post.create(author, title, content);
+        Post post = new Post(author, title, content);
         Post savePost = postRepository.save(post);
         eventPublisher.publishEvent(new PostCreatedEvent(savePost.getId(), savePost.getAuthor().getId()));
         String randomSecureTip = memberApiClient.getRandomSecureTip();

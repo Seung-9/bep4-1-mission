@@ -2,8 +2,6 @@ package com.back.boundedcontext.cash.app;
 
 import com.back.boundedcontext.cash.domain.CashMember;
 import com.back.boundedcontext.cash.domain.Wallet;
-import com.back.boundedcontext.cash.out.CashMemberRepository;
-import com.back.boundedcontext.cash.out.WalletRepository;
 import com.back.shared.member.dto.MemberDto;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -13,38 +11,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class CashFacade {
-    private final CashMemberRepository cashMemberRepository;
-    private final WalletRepository walletRepository;
+    private final CashSyncMemberUseCase cashSyncMemberUseCase;
+    private final CashCreateWalletUseCase cashCreateWalletUseCase;
+    private final CashSupport cashSupport;
 
     @Transactional
     public CashMember syncMember(MemberDto member) {
-        CashMember _member = new CashMember(
-                member.getId(),
-                member.getCreateDate(),
-                member.getModifyDate(),
-                member.getUsername(),
-                "",
-                member.getNickname(),
-                member.getActivityScore()
-        );
-
-        return cashMemberRepository.save(_member);
+        return cashSyncMemberUseCase.syncMember(member);
     }
 
     @Transactional
     public Wallet createWallet(CashMember holder) {
-        Wallet wallet = new Wallet(holder);
-
-        return walletRepository.save(wallet);
+        return cashCreateWalletUseCase.createWallet(holder);
     }
 
     @Transactional(readOnly = true)
     public Optional<CashMember> findMemberByUsername(String username) {
-        return cashMemberRepository.findByUsername(username);
+        return cashSupport.findMemberByUsername(username);
     }
 
     @Transactional(readOnly = true)
     public Optional<Wallet> findWalletByHolder(CashMember holder) {
-        return walletRepository.findByHolder(holder);
+        return cashSupport.findWalletByHolder(holder);
     }
 }

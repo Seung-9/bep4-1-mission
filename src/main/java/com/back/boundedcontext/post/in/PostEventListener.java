@@ -6,6 +6,7 @@ import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMI
 
 import com.back.boundedcontext.post.app.PostFacade;
 import com.back.shared.member.event.MemberCreateEvent;
+import com.back.shared.member.event.MemberModifiedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,12 @@ public class PostEventListener {
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(MemberCreateEvent event) {
+        postFacade.syncMember(event.getMember());
+    }
+
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
+    public void handle(MemberModifiedEvent event) {
         postFacade.syncMember(event.getMember());
     }
 }

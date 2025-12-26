@@ -2,8 +2,6 @@ package com.back.boundedcontext.post.app;
 
 import com.back.boundedcontext.post.domain.Post;
 import com.back.boundedcontext.post.domain.PostMember;
-import com.back.boundedcontext.post.out.PostMemberRepository;
-import com.back.boundedcontext.post.out.PostRepository;
 import com.back.global.rsdata.RsData;
 import com.back.shared.member.dto.MemberDto;
 import com.back.shared.post.dto.PostCreateRequest;
@@ -18,12 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @Slf4j
 public class PostFacade {
-    private final PostRepository postRepository;
-    private final PostMemberRepository postMemberRepository;
+    private final PostSupport postSupport;
+    private final PostSyncMemberUseCase postSyncMemberUseCase;
     private final PostUseCase postUseCase;
 
     public long count() {
-        return postRepository.count();
+        return postSupport.count();
     }
 
     @Transactional
@@ -32,27 +30,16 @@ public class PostFacade {
     }
 
     public Optional<Post> findById(int id) {
-        return postRepository.findById(id);
+        return postSupport.findById(id);
     }
 
     @Transactional
     public PostMember syncMember(MemberDto member) {
-        PostMember postMember = new PostMember(
-                member.getId(),
-                member.getCreateDate(),
-                member.getModifyDate(),
-                member.getUsername(),
-                "",
-                member.getNickname(),
-                member.getActivityScore()
-        );
-
-        return postMemberRepository.save(postMember);
+        return postSyncMemberUseCase.syncMember(member);
     }
 
-
     @Transactional(readOnly = true)
-    public Optional<PostMember> findPostMemberByUsername(String username) {
-        return postMemberRepository.findByUsername(username);
+    public Optional<PostMember> findMemberByUsername(String username) {
+        return postSupport.findMemberByUsername(username);
     }
 }

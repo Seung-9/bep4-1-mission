@@ -28,7 +28,7 @@ public class Product extends BaseAndTime {
     private long salePrice;
 
     public static Product create(MarketMember seller, String sourceTypeCode, int sourceId,
-                                 String name, String description, int price, int salePrice) {
+                                 String name, String description, long price, long salePrice) {
         return Product.builder()
                 .seller(seller)
                 .sourceTypeCode(sourceTypeCode)

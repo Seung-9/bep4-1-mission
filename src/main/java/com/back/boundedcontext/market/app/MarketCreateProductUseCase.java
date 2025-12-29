@@ -12,7 +12,7 @@ public class MarketCreateProductUseCase {
     private final ProductRepository productRepository;
 
     public Product createProduct(MarketMember seller, String sourceTypeCode, int sourceId,
-            String name, String description, int price, int salePrice) {
+            String name, String description, long price, long salePrice) {
         Product product = Product.create(seller, sourceTypeCode, sourceId, name, description, price, salePrice);
         return productRepository.save(product);
     }

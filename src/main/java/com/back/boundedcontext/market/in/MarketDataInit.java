@@ -1,6 +1,7 @@
 package com.back.boundedcontext.market.in;
 
 import com.back.boundedcontext.market.app.MarketFacade;
+import com.back.boundedcontext.market.domain.Cart;
 import com.back.boundedcontext.market.domain.MarketMember;
 import com.back.boundedcontext.market.domain.Product;
 import com.back.shared.post.dto.PostDto;
@@ -32,6 +33,7 @@ public class MarketDataInit {
     public ApplicationRunner marketDataInitApplicationRunner() {
         return args -> {
             self.makeBaseProducts();
+            self.makeBaseCartItems();
         };
     }
 
@@ -75,5 +77,37 @@ public class MarketDataInit {
         Product product6 = marketFacade.createProduct(
                 user3MarketMember, "Post", post6.id(),
                 post6.title(), post6.content(), 35_000, 35_000);
+    }
+
+    @Transactional
+    public void makeBaseCartItems() {
+        MarketMember user1Member = marketFacade.findMemberByUsername("user1").get();
+        MarketMember user2Member = marketFacade.findMemberByUsername("user2").get();
+        MarketMember user3Member = marketFacade.findMemberByUsername("user3").get();
+
+        Cart cart1 = marketFacade.findCartByBuyer(user1Member).get();
+        Cart cart2 = marketFacade.findCartByBuyer(user2Member).get();
+        Cart cart3 = marketFacade.findCartByBuyer(user3Member).get();
+
+        Product product1 = marketFacade.findProductById(1).get();
+        Product product2 = marketFacade.findProductById(2).get();
+        Product product3 = marketFacade.findProductById(3).get();
+        Product product4 = marketFacade.findProductById(4).get();
+        Product product5 = marketFacade.findProductById(5).get();
+        Product product6 = marketFacade.findProductById(6).get();
+
+        if (cart1.hasItems()) return;
+
+        cart1.addItem(product1);
+        cart1.addItem(product2);
+        cart1.addItem(product3);
+        cart1.addItem(product4);
+
+        cart2.addItem(product1);
+        cart2.addItem(product2);
+        cart2.addItem(product3);
+
+        cart3.addItem(product1);
+        cart3.addItem(product2);
     }
 }

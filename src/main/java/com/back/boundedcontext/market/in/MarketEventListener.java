@@ -4,6 +4,7 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRES_NE
 import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
 import com.back.boundedcontext.market.app.MarketFacade;
+import com.back.shared.market.event.MarketMemberCreatedEvent;
 import com.back.shared.member.event.MemberCreateEvent;
 import com.back.shared.member.event.MemberModifiedEvent;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,11 @@ public class MarketEventListener {
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(MemberModifiedEvent event) {
         marketFacade.syncMember(event.getMember());
+    }
+
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
+    public void handle(MarketMemberCreatedEvent event) {
+        marketFacade.createCart(event.getMember());
     }
 }

@@ -1,7 +1,10 @@
 package com.back.boundedcontext.market.app;
 
+import com.back.boundedcontext.market.domain.Cart;
 import com.back.boundedcontext.market.domain.MarketMember;
 import com.back.boundedcontext.market.domain.Product;
+import com.back.global.rsdata.RsData;
+import com.back.shared.market.dto.MarketMemberDto;
 import com.back.shared.member.dto.MemberDto;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -10,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MarketFacade {
     private final MarketSyncMemberUseCase marketSyncMemberUseCase;
     private final MarketCreateProductUseCase marketCreateProductUseCase;
+    private final MarketCreateCartUseCase marketCreateCartUseCase;
     private final MarketSupport marketSupport;
 
     @Transactional
@@ -20,7 +25,6 @@ public class MarketFacade {
         return marketSyncMemberUseCase.syncMember(member);
     }
 
-    @Transactional(readOnly = true)
     public long productsCount() {
         return marketSupport.countProducts();
     }
@@ -32,8 +36,22 @@ public class MarketFacade {
         );
     }
 
-    @Transactional(readOnly = true)
     public Optional<MarketMember> findMemberByUsername(String username) {
         return marketSupport.findMemberByUsername(username);
+    }
+
+    @Transactional
+    public RsData<Cart> createCart(MarketMemberDto buyer) {
+        return marketCreateCartUseCase.createCart(buyer);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Cart> findCartByBuyer(MarketMember buyer) {
+        return marketSupport.findCartByBuyer(buyer);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Product> findProductById(int id) {
+        return marketSupport.findProductById(id);
     }
 }

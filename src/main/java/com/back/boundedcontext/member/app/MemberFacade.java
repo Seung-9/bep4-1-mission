@@ -34,6 +34,6 @@ public class MemberFacade {
     }
 
     public String getRandomSecureTip() {
-        return "비밀번호의 유효기간은 %d일 입니다.".formatted(memberGetRandomSecureTipUseCase.getRandomSecureTip());
+        return "비밀번호의 유효기간은 %s일 입니다.".formatted(memberGetRandomSecureTipUseCase.getRandomSecureTip());
     }
 }

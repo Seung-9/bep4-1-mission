@@ -4,6 +4,8 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRES_NE
 import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
 import com.back.boundedcontext.market.app.MarketFacade;
+import com.back.shared.cash.event.CashOrderPaymentFailedEvent;
+import com.back.shared.cash.event.CashOrderPaymentSucceededEvent;
 import com.back.shared.market.event.MarketMemberCreatedEvent;
 import com.back.shared.member.event.MemberCreateEvent;
 import com.back.shared.member.event.MemberModifiedEvent;
@@ -32,6 +34,19 @@ public class MarketEventListener {
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(MarketMemberCreatedEvent event) {
-        marketFacade.createCart(event.getMember());
+        marketFacade.createCart(event.member());
+    }
+
+
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
+    public void handle(CashOrderPaymentSucceededEvent event) {
+        marketFacade.handle(event);
+    }
+
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
+    public void handle(CashOrderPaymentFailedEvent event) {
+        marketFacade.handle(event);
     }
 }

@@ -1,6 +1,9 @@
 server:
   port: 8080
 spring:
+  config:
+    import:
+      optional:file:.env[.properties]
   application:
     name: back
   profiles:
@@ -28,3 +31,8 @@ logging:
     org.hibernate.orm.jdbc.bind: TRACE
     org.hibernate.orm.jdbc.extract: TRACE
     org.springframework.transaction.interceptor: TRACE
+custom:
+  market:
+    toss:
+      payment:
+        secretKey: ${TOSS_PAYMENT_SECRET_KEY}

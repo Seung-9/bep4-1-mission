@@ -5,10 +5,13 @@ import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.FetchType.LAZY;
 
 import com.back.global.jpa.entity.BaseAndTime;
+import com.back.shared.market.dto.OrderDto;
+import com.back.shared.market.event.MarketOrderPaymentRequestedEvent;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
@@ -25,6 +28,8 @@ public class Order extends BaseAndTime {
     private MarketMember buyer;
     private long price;
     private long salePrice;
+    private LocalDateTime requestPaymentDate;
+    private LocalDateTime paymentDate;
 
     @OneToMany(mappedBy = "order", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
@@ -43,5 +48,27 @@ public class Order extends BaseAndTime {
         items.add(orderItem);
         price += product.getPrice();
         salePrice += product.getSalePrice();
+    }
+
+    public void completePayment() {
+        paymentDate = LocalDateTime.now();
+    }
+
+    public boolean isPaid() {
+        return paymentDate != null;
+    }
+
+    public void requestPayment(long pgPaymentAmount) {
+        requestPaymentDate = LocalDateTime.now();
+        publishEvent(
+                new MarketOrderPaymentRequestedEvent(
+                        OrderDto.of(this),
+                        pgPaymentAmount
+                )
+        );
+    }
+
+    public void cancelRequestPayment() {
+        requestPaymentDate = null;
     }
 }

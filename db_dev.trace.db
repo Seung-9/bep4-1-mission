@@ -506,3 +506,8 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: /Users/seunggu-s
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
 	... 59 more
+2025-12-29 15:24:22.390541+09:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM MARKET_ORDER_ITEM \000d\000a\000d\000a[*]SELECT * FROM MARKET_ORDER"; SQL statement:
+SELECT * FROM MARKET_ORDER_ITEM 
+
+SELECT * FROM MARKET_ORDER [42000-240]

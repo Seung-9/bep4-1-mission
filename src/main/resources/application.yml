@@ -2,8 +2,7 @@ server:
   port: 8080
 spring:
   config:
-    import:
-      optional:file:.env[.properties]
+    import: optional:file:.env[.properties]
   application:
     name: back
   profiles:
@@ -34,5 +33,5 @@ logging:
 custom:
   market:
     toss:
-      payment:
-        secretKey: ${TOSS_PAYMENT_SECRET_KEY}
+      payments:
+        secretKey: ${TOSS_PAYMENTS_SECRET_KEY:}

@@ -5,6 +5,7 @@ import com.back.boundedcontext.post.domain.PostMember;
 import com.back.global.rsdata.RsData;
 import com.back.shared.member.dto.MemberDto;
 import com.back.shared.post.dto.PostCreateRequest;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,5 +42,11 @@ public class PostFacade {
     @Transactional(readOnly = true)
     public Optional<PostMember> findMemberByUsername(String username) {
         return postSupport.findMemberByUsername(username);
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<Post> findByOrderByIdDesc() {
+        return postSupport.findByOrderByIdDesc();
     }
 }

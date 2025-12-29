@@ -1,7 +1,9 @@
 package com.back.boundedcontext.post.out;
 
 import com.back.boundedcontext.post.domain.Post;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
+    List<Post> findByOrderByIdDesc();
 }

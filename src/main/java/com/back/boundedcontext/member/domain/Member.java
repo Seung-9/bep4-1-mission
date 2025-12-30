@@ -20,7 +20,7 @@ public class Member extends SourceMember {
     public int increaseActivityScore(int amount) {
         setActivityScore(getActivityScore() + amount);
         publishEvent(
-                new MemberModifiedEvent(new MemberDto(this))
+                new MemberModifiedEvent(MemberDto.of(this))
         );
         return getActivityScore();
     }

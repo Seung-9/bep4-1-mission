@@ -3,7 +3,7 @@ package com.back.boundedcontext.cash.app;
 import com.back.boundedcontext.cash.domain.CashMember;
 import com.back.boundedcontext.cash.domain.Wallet;
 import com.back.shared.cash.dto.CashMemberDto;
-import com.back.shared.market.event.MarketOrderPaymentRequestedEvent;
+import com.back.shared.market.dto.OrderDto;
 import com.back.shared.member.dto.MemberDto;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +38,8 @@ public class CashFacade {
     }
 
     @Transactional
-    public void handle(MarketOrderPaymentRequestedEvent event) {
-        cashCompleteOrderPaymentUseCase.handle(event);
+    public void handle(OrderDto order, long pgPaymentAmount) {
+        cashCompleteOrderPaymentUseCase.completeOrderPayment(order, pgPaymentAmount);
     }
 
     public Optional<Wallet> findWalletByHolderId(int holderId) {

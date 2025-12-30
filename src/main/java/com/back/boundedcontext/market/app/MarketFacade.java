@@ -5,8 +5,6 @@ import com.back.boundedcontext.market.domain.MarketMember;
 import com.back.boundedcontext.market.domain.Order;
 import com.back.boundedcontext.market.domain.Product;
 import com.back.global.rsdata.RsData;
-import com.back.shared.cash.event.CashOrderPaymentFailedEvent;
-import com.back.shared.cash.event.CashOrderPaymentSucceededEvent;
 import com.back.shared.market.dto.MarketMemberDto;
 import com.back.shared.member.dto.MemberDto;
 import java.util.Optional;
@@ -82,12 +80,12 @@ public class MarketFacade {
     }
 
     @Transactional
-    public void handle(CashOrderPaymentSucceededEvent event) {
-        marketCompleteOrderPaymentUseCase.handle(event);
+    public void completeOrderPayment(int orderId) {
+        marketCompleteOrderPaymentUseCase.handle(orderId);
     }
 
     @Transactional
-    public void handle(CashOrderPaymentFailedEvent event) {
-        marketCancelOrderRequestPaymentUseCase.handle(event);
+    public void cancelOrderPayment(int orderId) {
+        marketCancelOrderRequestPaymentUseCase.handle(orderId);
     }
 }

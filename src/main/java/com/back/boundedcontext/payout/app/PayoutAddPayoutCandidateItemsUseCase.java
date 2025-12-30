@@ -29,7 +29,7 @@ public class PayoutAddPayoutCandidateItemsUseCase {
             OrderDto order,
             OrderItemDto orderItem
     ) {
-        PayoutMember holding = payoutSupport.findHolingMember().get();
+        PayoutMember system = payoutSupport.findSystemMember().get();
         PayoutMember buyer = payoutSupport.findMemberById(orderItem.buyerId()).get();
         PayoutMember seller = payoutSupport.findMemberById(orderItem.sellerId()).get();
 
@@ -39,7 +39,7 @@ public class PayoutAddPayoutCandidateItemsUseCase {
                 orderItem.id(),
                 order.paymentDate(),
                 buyer,
-                holding,
+                system,
                 orderItem.payoutFee()
         );
 

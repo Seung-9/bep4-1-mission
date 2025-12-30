@@ -5,6 +5,7 @@ import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.FetchType.LAZY;
 
 import com.back.global.jpa.entity.BaseAndTime;
+import com.back.shared.market.dto.MarketOrderPaymentCompletedEvent;
 import com.back.shared.market.dto.OrderDto;
 import com.back.shared.market.event.MarketOrderPaymentRequestedEvent;
 import jakarta.persistence.Entity;
@@ -53,6 +54,11 @@ public class Order extends BaseAndTime {
 
     public void completePayment() {
         paymentDate = LocalDateTime.now();
+        publishEvent(
+                new MarketOrderPaymentCompletedEvent(
+                        OrderDto.of(this)
+                )
+        );
     }
 
     public boolean isPaid() {

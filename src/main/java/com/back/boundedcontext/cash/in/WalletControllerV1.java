@@ -1,5 +1,6 @@
-package com.back.boundedcontext.cash.app;
+package com.back.boundedcontext.cash.in;
 
+import com.back.boundedcontext.cash.app.CashFacade;
 import com.back.shared.cash.dto.WalletDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;

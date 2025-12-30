@@ -16,16 +16,16 @@ public class MarketSyncMemberUseCase {
     private final EventPublisher eventPublisher;
 
     public MarketMember syncMember(MemberDto member) {
-        boolean isNew = !marketMemberRepository.existsById(member.getId());
+        boolean isNew = !marketMemberRepository.existsById(member.id());
 
         MarketMember _member = marketMemberRepository.save(new MarketMember(
-                member.getId(),
-                member.getCreateDate(),
-                member.getModifyDate(),
-                member.getUsername(),
+                member.id(),
+                member.createDate(),
+                member.modifyDate(),
+                member.username(),
                 "",
-                member.getNickname(),
-                member.getActivityScore())
+                member.nickname(),
+                member.activityScore())
         );
 
         if (isNew) {

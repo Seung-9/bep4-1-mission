@@ -1,5 +1,6 @@
-package com.back.boundedcontext.market.app;
+package com.back.boundedcontext.market.in;
 
+import com.back.boundedcontext.market.app.MarketFacade;
 import com.back.boundedcontext.market.domain.Order;
 import com.back.global.exception.DomainException;
 import com.back.global.rsdata.RsData;

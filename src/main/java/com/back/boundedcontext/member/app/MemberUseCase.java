@@ -22,7 +22,7 @@ public class MemberUseCase {
         });
         Member member = new Member(username, password, nickname);
         Member saveMember = memberRepository.save(member);
-        eventPublisher.publishEvent(new MemberCreateEvent(new MemberDto(saveMember)));
+        eventPublisher.publishEvent(new MemberCreateEvent(MemberDto.of(saveMember)));
 
         return new RsData<>("201-1", "%d번 회원이 생성되었습니다."
                 .formatted(saveMember.getId()), saveMember);

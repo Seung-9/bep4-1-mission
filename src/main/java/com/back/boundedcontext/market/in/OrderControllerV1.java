@@ -5,13 +5,16 @@ import com.back.boundedcontext.market.domain.Order;
 import com.back.global.exception.DomainException;
 import com.back.global.rsdata.RsData;
 import com.back.shared.cash.out.CashApiClient;
+import com.back.shared.market.dto.OrderItemDto;
 import com.back.shared.market.out.TossPaymentsService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/market/orders")
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OrderControllerV1 {
     private final MarketFacade marketFacade;
     private final TossPaymentsService tossPaymentsService;
@@ -76,5 +80,17 @@ public class OrderControllerV1 {
         marketFacade.requestPayment(order, reqBody.amount());
 
         return new RsData<>("202-1", "결제 프로세스가 시작되었습니다.");
+    }
+
+
+    @GetMapping("/{id}/items")
+    public List<OrderItemDto> getItems(@PathVariable int id) {
+        return marketFacade
+                .findOrderById(id)
+                .get()
+                .getItems()
+                .stream()
+                .map(OrderItemDto::of)
+                .toList();
     }
 }

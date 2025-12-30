@@ -1,11 +1,12 @@
 package com.back.global.rsdata;
 
+import com.back.standard.resulttype.ResultType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class RsData<T> {
+public class RsData<T> implements ResultType {
     private final String resultCode;
     private final String msg;
     private final T data;

@@ -42,4 +42,12 @@ public class OrderItem extends BaseAndTime {
                 .payoutRate(MarketPolicy.PRODUCT_PAYOUT_RATE)
                 .build();
     }
+
+    public long getPayoutFee() {
+        return MarketPolicy.calculatePayoutFee(getSalePrice(), getPayoutRate());
+    }
+
+    public long getSalePriceWithoutFee() {
+        return MarketPolicy.calculateSalePriceWithoutFee(getSalePrice(), getPayoutRate());
+    }
 }

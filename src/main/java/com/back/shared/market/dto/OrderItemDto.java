@@ -1,6 +1,7 @@
 package com.back.shared.market.dto;
 
 import com.back.boundedcontext.market.domain.OrderItem;
+import com.back.standard.modeltype.CanGetModelTypeCode;
 import java.time.LocalDateTime;
 
 public record OrderItemDto(
@@ -16,8 +17,10 @@ public record OrderItemDto(
         String productName,
         long price,
         long salePrice,
-        double payoutRate
-) {
+        double payoutRate,
+        long payoutFee,
+        long salePriceWithoutFee
+) implements CanGetModelTypeCode {
     public static OrderItemDto of(OrderItem orderItem) {
         return new OrderItemDto(
                 orderItem.getId(),
@@ -32,7 +35,14 @@ public record OrderItemDto(
                 orderItem.getProductName(),
                 orderItem.getPrice(),
                 orderItem.getSalePrice(),
-                orderItem.getPayoutRate()
+                orderItem.getPayoutRate(),
+                orderItem.getPayoutFee(),
+                orderItem.getSalePriceWithoutFee()
         );
+    }
+
+    @Override
+    public String getModelTypeCode() {
+        return "OrderItem";
     }
 }

@@ -1,5 +1,5 @@
 package com.back.standard.modeltype;
 
-public interface CanGetModelTypeCode {
+public interface HasModelTypeCode {
     String getModelTypeCode();
 }

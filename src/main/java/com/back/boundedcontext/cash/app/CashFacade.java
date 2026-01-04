@@ -5,6 +5,7 @@ import com.back.boundedcontext.cash.domain.Wallet;
 import com.back.shared.cash.dto.CashMemberDto;
 import com.back.shared.market.dto.OrderDto;
 import com.back.shared.member.dto.MemberDto;
+import com.back.shared.payout.dto.PayoutDto;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class CashFacade {
     private final CashSyncMemberUseCase cashSyncMemberUseCase;
     private final CashCreateWalletUseCase cashCreateWalletUseCase;
     private final CashCompleteOrderPaymentUseCase cashCompleteOrderPaymentUseCase;
+    private final CashCompletePayoutUseCase cashCompletePayoutUseCase;
     private final CashSupport cashSupport;
 
     @Transactional
@@ -44,5 +46,10 @@ public class CashFacade {
 
     public Optional<Wallet> findWalletByHolderId(int holderId) {
         return cashSupport.findWalletByHolderId(holderId);
+    }
+
+    @Transactional
+    public void completePayout(PayoutDto payout) {
+        cashCompletePayoutUseCase.completePayout(payout);
     }
 }

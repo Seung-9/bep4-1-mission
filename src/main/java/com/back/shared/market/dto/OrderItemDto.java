@@ -1,7 +1,7 @@
 package com.back.shared.market.dto;
 
 import com.back.boundedcontext.market.domain.OrderItem;
-import com.back.standard.modeltype.CanGetModelTypeCode;
+import com.back.standard.modeltype.HasModelTypeCode;
 import java.time.LocalDateTime;
 
 public record OrderItemDto(
@@ -20,7 +20,7 @@ public record OrderItemDto(
         double payoutRate,
         long payoutFee,
         long salePriceWithoutFee
-) implements CanGetModelTypeCode {
+) implements HasModelTypeCode {
     public static OrderItemDto of(OrderItem orderItem) {
         return new OrderItemDto(
                 orderItem.getId(),
